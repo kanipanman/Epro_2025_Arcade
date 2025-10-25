@@ -8,17 +8,23 @@ public class Target_L2 : MonoBehaviour
 {
     public float move;
     public float counterCount;
-    public float scoreValue = 20f;
-    
-    int counter = 0;
+    public int scoreValue = 20;
+    private int counter = 0;
     public GameObject breakEffect;
     private GameObject scoreText;
-   
+    private GameObject scoreText1P;
+    private GameObject scoreText2P;
+    private GameObject scoreText3P;
+    private GameObject scoreText4P;
+
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine("TargetStart");
-        scoreText = GameObject.Find("Score_1P");
+        scoreText1P = GameObject.Find("Score_1P");
+        scoreText2P = GameObject.Find("Score_2P");
+        scoreText3P = GameObject.Find("Score_3P");
+        scoreText4P = GameObject.Find("Score_4P");
     }
 
     IEnumerator TargetStart()
@@ -42,11 +48,48 @@ public class Target_L2 : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-
-        Destroy(collision.gameObject);
-        Debug.Log("Oncollision");
-        GenerateEffect();
-       
+        //target_L1とほぼ同様   
+        if (collision.gameObject.CompareTag("Bullet_1P"))
+        {
+            Destroy(collision.gameObject);
+            scoreText1P.GetComponent<scoreManager1P>().score1P = scoreText1P.GetComponent<scoreManager1P>().score1P + scoreValue;
+            Debug.Log("Oncollision");
+            GenerateEffect();
+            gameObject.GetComponent<Renderer>().enabled = false;
+            Invoke("switchVisible", 5.0f);
+        }
+        else if (collision.gameObject.CompareTag("Bullet_2P"))
+        {
+            Destroy(collision.gameObject);
+            scoreText1P.GetComponent<scoreManager2P>().score2P = scoreText2P.GetComponent<scoreManager2P>().score2P + scoreValue;
+            Debug.Log("Oncollision");
+            GenerateEffect();
+            gameObject.GetComponent<Renderer>().enabled = false;
+            Invoke("switchVisible", 5.0f);
+        }
+        else if (collision.gameObject.CompareTag("Bullet_3P"))
+        {
+            Destroy(collision.gameObject);
+            scoreText1P.GetComponent<scoreManager3P>().score3P = scoreText3P.GetComponent<scoreManager3P>().score3P + scoreValue;
+            Debug.Log("Oncollision");
+            GenerateEffect();
+            gameObject.GetComponent<Renderer>().enabled = false;
+            Invoke("switchVisible", 5.0f);
+        }
+        else if (collision.gameObject.CompareTag("Bullet_4P"))
+        {
+            Destroy(collision.gameObject);
+            scoreText1P.GetComponent<scoreManager4P>().score4P = scoreText4P.GetComponent<scoreManager4P>().score4P + scoreValue;
+            Debug.Log("Oncollision");
+            GenerateEffect();
+            gameObject.GetComponent<Renderer>().enabled = false;
+            Invoke("switchVisible", 5.0f);
+        }
+    }
+    void switchVisible()
+    {
+        gameObject.GetComponent<Renderer>().enabled = true;
+        //このオブジェクトを表示する
     }
 
     void GenerateEffect()

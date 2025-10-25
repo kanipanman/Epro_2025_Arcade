@@ -41,7 +41,7 @@ public class Targetgenerator : MonoBehaviour
             //　出現させる的をランダムに選ぶ
             var randomValue = Random.Range(0, enemys.Length);
 
-            GameObject.Instantiate(enemys[randomValue], transform.position, Quaternion.Euler(0f, 0f, 0f));
+            GameObject.Instantiate(enemys[randomValue], transform.position, Quaternion.Euler(0f, 90f, 0f));
 
             numberOfEnemys++;
             elapsedTime = 0f;
