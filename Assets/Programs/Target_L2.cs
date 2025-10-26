@@ -17,14 +17,18 @@ public class Target_L2 : MonoBehaviour
     private GameObject scoreText3P;
     private GameObject scoreText4P;
 
+    public int baseScore = 20;
+    private BuffDebuffManager buffDebuffManager;
+
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine("TargetStart");
-        scoreText1P = GameObject.Find("Score_1P");
-        scoreText2P = GameObject.Find("Score_2P");
-        scoreText3P = GameObject.Find("Score_3P");
-        scoreText4P = GameObject.Find("Score_4P");
+        scoreText1P = GameObject.Find("Main_UI/Score_1P");
+        scoreText2P = GameObject.Find("Main_UI/Score_2P");
+        scoreText3P = GameObject.Find("Main_UI/Score_3P");
+        scoreText4P = GameObject.Find("Main_UI/Score_4P");
+        buffDebuffManager = FindObjectOfType<BuffDebuffManager>();
     }
 
     IEnumerator TargetStart()
@@ -45,47 +49,112 @@ public class Target_L2 : MonoBehaviour
             }
         }
     }
+void OnCollisionEnter(Collision collision)
+{
+    GameObject targetScoreText = null;
+    Component scoreManager = null;
+    int playerNum = 0; // 1〜4P判定用
 
-    void OnCollisionEnter(Collision collision)
+    if (collision.gameObject.CompareTag("Bullet_1P"))
     {
-        //target_L1とほぼ同様   
-        if (collision.gameObject.CompareTag("Bullet_1P"))
+        targetScoreText = scoreText1P;
+        scoreManager = targetScoreText != null ? targetScoreText.GetComponent<scoreManager1P>() : null;
+        playerNum = 1;
+    }
+    else if (collision.gameObject.CompareTag("Bullet_2P"))
+    {
+        targetScoreText = scoreText2P;
+        scoreManager = targetScoreText != null ? targetScoreText.GetComponent<scoreManager2P>() : null;
+        playerNum = 2;
+    }
+    else if (collision.gameObject.CompareTag("Bullet_3P"))
+    {
+        targetScoreText = scoreText3P;
+        scoreManager = targetScoreText != null ? targetScoreText.GetComponent<scoreManager3P>() : null;
+        playerNum = 3;
+    }
+    else if (collision.gameObject.CompareTag("Bullet_4P"))
+    {
+        targetScoreText = scoreText4P;
+        scoreManager = targetScoreText != null ? targetScoreText.GetComponent<scoreManager4P>() : null;
+        playerNum = 4;
+    }
+    else
+    {
+        return;
+    }
+
+    Destroy(collision.gameObject);
+
+    if (targetScoreText == null)
+    {
+        Debug.LogError($"Target scoreText is null for {collision.gameObject.tag}");
+        return;
+    }
+    if (scoreManager == null)
+    {
+        Debug.LogError($"Score manager component missing on {targetScoreText.name}");
+        return;
+    }
+
+    // --- バフ/デバフ倍率適用（デバッグ強化版） ---
+    float multiplier = 1f;
+
+    // use the cached manager from Start() if available
+    BuffDebuffManager manager = buffDebuffManager ?? FindObjectOfType<BuffDebuffManager>();
+    if (manager == null)
+    {
+        Debug.LogWarning("[Target_L2] BuffDebuffManager not found in scene.");
+    }
+    else
+    {
+        // PlayerArea を取得（GetPlayerArea が未定義の playerNum を返す場合もある）
+        Area playerArea = Area.None;
+        try
         {
-            Destroy(collision.gameObject);
-            scoreText1P.GetComponent<scoreManager1P>().score1P = scoreText1P.GetComponent<scoreManager1P>().score1P + scoreValue;
-            Debug.Log("Oncollision");
-            GenerateEffect();
-            gameObject.GetComponent<Renderer>().enabled = false;
-            Invoke("switchVisible", 5.0f);
+            playerArea = PlayerAreaTracker.GetPlayerArea(playerNum);
         }
-        else if (collision.gameObject.CompareTag("Bullet_2P"))
+        catch (System.Exception e)
         {
-            Destroy(collision.gameObject);
-            scoreText1P.GetComponent<scoreManager2P>().score2P = scoreText2P.GetComponent<scoreManager2P>().score2P + scoreValue;
-            Debug.Log("Oncollision");
-            GenerateEffect();
-            gameObject.GetComponent<Renderer>().enabled = false;
-            Invoke("switchVisible", 5.0f);
+            Debug.LogError($"[Target_L2] PlayerAreaTracker.GetPlayerArea threw: {e.Message}");
         }
-        else if (collision.gameObject.CompareTag("Bullet_3P"))
+
+        Debug.Log($"[Target_L2] Player{playerNum} area={playerArea}, Buff={manager.buffArea}, Debuff={manager.debuffArea}");
+
+        // 比較 — enumが一致するかを確認
+        if (playerArea == manager.buffArea)
         {
-            Destroy(collision.gameObject);
-            scoreText1P.GetComponent<scoreManager3P>().score3P = scoreText3P.GetComponent<scoreManager3P>().score3P + scoreValue;
-            Debug.Log("Oncollision");
-            GenerateEffect();
-            gameObject.GetComponent<Renderer>().enabled = false;
-            Invoke("switchVisible", 5.0f);
+            multiplier = 2f;
+            Debug.Log($"[Target_L2] Player{playerNum} is in BUFF area -> multiplier {multiplier}");
         }
-        else if (collision.gameObject.CompareTag("Bullet_4P"))
+        else if (playerArea == manager.debuffArea)
         {
-            Destroy(collision.gameObject);
-            scoreText1P.GetComponent<scoreManager4P>().score4P = scoreText4P.GetComponent<scoreManager4P>().score4P + scoreValue;
-            Debug.Log("Oncollision");
-            GenerateEffect();
-            gameObject.GetComponent<Renderer>().enabled = false;
-            Invoke("switchVisible", 5.0f);
+            multiplier = 0.5f;
+            Debug.Log($"[Target_L2] Player{playerNum} is in DEBUFF area -> multiplier {multiplier}");
+        }
+        else
+        {
+            Debug.Log($"[Target_L2] Player{playerNum} not in buff/debuff area -> multiplier {multiplier}");
         }
     }
+
+    int finalScore = Mathf.RoundToInt(scoreValue * multiplier);
+    Debug.Log($"[Target_L2] scoreValue={scoreValue}, multiplier={multiplier}, finalScore={finalScore}");
+
+
+    // --- スコア加算 ---
+    if (playerNum == 1) ((scoreManager1P)scoreManager).score1P += finalScore;
+    if (playerNum == 2) ((scoreManager2P)scoreManager).score2P += finalScore;
+    if (playerNum == 3) ((scoreManager3P)scoreManager).score3P += finalScore;
+    if (playerNum == 4) ((scoreManager4P)scoreManager).score4P += finalScore;
+
+    GenerateEffect();
+    gameObject.GetComponent<Renderer>().enabled = false;
+    Invoke("switchVisible", 5.0f);
+}
+
+
+
     void switchVisible()
     {
         gameObject.GetComponent<Renderer>().enabled = true;
