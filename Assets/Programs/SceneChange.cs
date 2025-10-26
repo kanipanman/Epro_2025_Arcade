@@ -1,23 +1,21 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement; // ← これが必要
 
 public class SceneChange : MonoBehaviour
 {
+    // インスペクターで指定できるように public にする
     public string nextSceneName;
 
-    public void StartCoopMode()
+    // ボタンに登録して呼び出す関数
+    public void ChangeScene()
     {
-        GameManager.Instance.isCoopMode = true;
-        GameManager.Instance.playerCount = 2;
-        GameManager.Instance.InitializeScores();
-        SceneManager.LoadScene(nextSceneName);
-    }
-
-    public void StartBattleMode()
-    {
-        GameManager.Instance.isCoopMode = false;
-        GameManager.Instance.playerCount = 2;
-        GameManager.Instance.InitializeScores();
-        SceneManager.LoadScene(nextSceneName);
+        if (!string.IsNullOrEmpty(nextSceneName))
+        {
+            SceneManager.LoadScene(nextSceneName);
+        }
+        else
+        {
+            Debug.LogWarning("次のシーン名が指定されていません。");
+        }
     }
 }

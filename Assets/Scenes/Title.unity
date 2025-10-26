@@ -416,7 +416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c9608dc15c73b34cb9c7bf23a9b2dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: Main
+  nextSceneName: PlayerSelect
 --- !u!114 &457876968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -986,7 +986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c9608dc15c73b34cb9c7bf23a9b2dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: Main
+  nextSceneName: PlayerSelect
 --- !u!114 &1182326185
 MonoBehaviour:
   m_ObjectHideFlags: 0
