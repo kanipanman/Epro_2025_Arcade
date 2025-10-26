@@ -20,4 +20,9 @@ public class Bullet : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.AddForce(0, 0, bulletForce, ForceMode.Impulse);
     }
+
+    void OnBecameInvisible()
+    {
+        Destroy(this.gameObject);
+    }
 }
