@@ -114,4 +114,4 @@ MonoBehaviour:
   breakEffect: {fileID: 8406402823834156216, guid: 66fe4e9c8ee50634fb732ac8a9f00b26, type: 3}
   targetPosition: {x: 0, y: 3, z: -47}
   speed: 2
-  scoreValue: 300
+  scoreValue: 200
