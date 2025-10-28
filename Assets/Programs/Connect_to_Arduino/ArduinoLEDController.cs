@@ -36,7 +36,28 @@ public class ArduinoLEDController : MonoBehaviour
             try
             {
                 port.WriteLine(command);
-                Debug.Log($"Sent command to Arduino: {command}");
+
+                // --- ログ出力追加 ---
+                string areaName = "";
+                switch(areaIndex)
+                {
+                    case 0: areaName = "TopLeft"; break;
+                    case 1: areaName = "TopRight"; break;
+                    case 2: areaName = "BottomLeft"; break;
+                    case 3: areaName = "BottomRight"; break;
+                    default: areaName = "Unknown"; break;
+                }
+
+                string colorName = "";
+                switch(colorCode)
+                {
+                    case 'Y': colorName = "Yellow"; break;
+                    case 'G': colorName = "Green"; break;
+                    case 'R': colorName = "Red"; break;
+                    default: colorName = "Unknown"; break;
+                }
+
+                Debug.Log($"[ArduinoLED] Area: {areaName}, Color: {colorName}, Command Sent: {command}");
             }
             catch (System.Exception e)
             {

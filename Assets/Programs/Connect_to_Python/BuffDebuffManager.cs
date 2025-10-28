@@ -7,6 +7,8 @@ public class BuffDebuffManager : MonoBehaviour
     public Area buffArea;
     public Area debuffArea;
 
+    public ArduinoLEDController ledController; // Inspectorでアタッチ
+
     private System.Random rnd = new System.Random();
 
     void Start()
@@ -32,5 +34,27 @@ public class BuffDebuffManager : MonoBehaviour
         debuffArea = temp;
 
         Debug.Log($"Buff Area: {buffArea}, Debuff Area: {debuffArea}");
+
+        // --- Arduino LED 送信 ---
+        if (ledController != null)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                char colorCode = 'Y'; // デフォルト: 黄
+
+                if (i == (int)buffArea)
+                    colorCode = 'G'; // バフ: 緑
+                else if (i == (int)debuffArea)
+                    colorCode = 'R'; // デバフ: 赤
+
+                ledController.SetLED(i, colorCode);
+
+                Debug.Log($"LED Command sent -> AreaIndex: {i}, ColorCode: {colorCode}");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("LED Controller not assigned in BuffDebuffManager.");
+        }
     }
 }
