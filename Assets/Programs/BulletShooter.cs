@@ -4,24 +4,18 @@ using UnityEngine;
 
 public class BulletShooter : MonoBehaviour
 {
-
     public GameObject bulletPrefab;
     private Vector3 mousePosition;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-         if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             mousePosition = Input.mousePosition;
-            mousePosition.z = 10.0f;
-            Instantiate(bulletPrefab, Camera.main.ScreenToWorldPoint(mousePosition), Quaternion.identity);
+            mousePosition.z = 10.0f; // カメラからの距離
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePosition);
+
+            Instantiate(bulletPrefab, worldPos, Quaternion.identity);
         }
     }
 }
