@@ -2577,7 +2577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6894f9598cbeb0345bf093852b7f2d30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portName: COM9
+  portName: COM12
   baudRate: 9600
   logText: {fileID: 622642862}
   eventInterval: 10
