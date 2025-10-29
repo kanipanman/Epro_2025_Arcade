@@ -13,6 +13,7 @@ public class Target_L1 : MonoBehaviour
     private GameObject scoreText2P;
     private GameObject scoreText3P;
     private GameObject scoreText4P;
+    private BoxCollider thisCollider;
    
   
 
@@ -23,6 +24,8 @@ public class Target_L1 : MonoBehaviour
         scoreText2P = GameObject.Find("Score_2P");
         scoreText3P = GameObject.Find("Score_3P");
         scoreText4P = GameObject.Find("Score_4P");
+        thisCollider = GetComponent<BoxCollider>();
+        
     }
 
     // Update is called once per frame
@@ -33,6 +36,7 @@ public class Target_L1 : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+       
         //死ぬほど見づらいですが容赦願います
         //弾が当たった後のスコア処理、オブジェクトの破壊とエフェクト出現
         if (collision.gameObject.CompareTag("Bullet_1P")) //1Pの弾が当たった場合
@@ -42,6 +46,7 @@ public class Target_L1 : MonoBehaviour
             scoreText1P.GetComponent<scoreManager1P>().score1P = scoreText1P.GetComponent<scoreManager1P>().score1P + scoreValue;
             Debug.Log("Oncollision");
             GenerateEffect();
+            
         }
         else if (collision.gameObject.CompareTag("Bullet_2P")) //2Pの弾が当たった場合
         {
@@ -73,7 +78,9 @@ public class Target_L1 : MonoBehaviour
     {
         GameObject effect = Instantiate(breakEffect) as GameObject;
         effect.transform.position = gameObject.transform.position;
+        
     }
+
 
     void OnBecameInvisible() 
     {
