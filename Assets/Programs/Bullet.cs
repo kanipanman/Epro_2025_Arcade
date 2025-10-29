@@ -1,23 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    
+    private Rigidbody rb;
 
-    public float bulletForce = 1.0f;
-    public Rigidbody rb;
-
-    // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         rb = GetComponent<Rigidbody>();
-        rb.AddForce(0, 0, bulletForce, ForceMode.Impulse);
+
+        // 他の弾との衝突を無効化
+        Bullet[] otherBullets = FindObjectsOfType<Bullet>();
+        Collider myCol = GetComponent<Collider>();
+
+        foreach (Bullet other in otherBullets)
+        {
+            if (other != this)
+            {
+                Collider otherCol = other.GetComponent<Collider>();
+                if (myCol && otherCol)
+                    Physics.IgnoreCollision(myCol, otherCol);
+            }
+        }
+
+        // 5秒後に自動で消滅
+        Destroy(gameObject, 5f);
     }
 }

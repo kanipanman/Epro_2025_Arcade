@@ -14,7 +14,7 @@ public class TimerContoller : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+  {
         time -= Time.deltaTime;
         //timeを減少させる
 
