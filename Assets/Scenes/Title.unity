@@ -765,7 +765,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.2149997, y: 102.7342}
+  m_AnchoredPosition: {x: -81, y: 102.7342}
   m_SizeDelta: {x: 400.1306, y: 116.422}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &828487223
@@ -788,7 +788,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: EPRO
+  m_text: "EPRO \u9632\u885B\u8ECD"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 964a38feb5c16b5419db5ca121b8bc45, type: 2}
   m_sharedMaterial: {fileID: 4737778936705889044, guid: 964a38feb5c16b5419db5ca121b8bc45, type: 2}
@@ -851,7 +851,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -162.45045, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1358,7 +1358,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: _EPRO_
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: db722a80c37c2564eb188870038c7bb4, type: 2}
   m_sharedMaterial: {fileID: 7042524834031859254, guid: db722a80c37c2564eb188870038c7bb4, type: 2}

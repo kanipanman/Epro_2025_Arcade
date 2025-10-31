@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 public class Shot : MonoBehaviour
 {
-    [Header("🔫 弾設定")]
+    [Header("🔫 発射設定")]
     [SerializeField] GameObject bulletPrefab;
-    [SerializeField] RectTransform pointerUI;
-    [SerializeField] Camera mainCamera;
+    [SerializeField] RectTransform pointerUI;   // 🎯 RawImage照準
+    [SerializeField] Camera mainCamera;         // 🎥 メインカメラ
     [SerializeField] float minPower = 1000f;
     [SerializeField] float maxPower = 3000f;
     [SerializeField] float chargeTimeMax = 2f;
@@ -16,69 +16,54 @@ public class Shot : MonoBehaviour
 
     private List<Joycon> joycons;
     private Joycon j;
+
     private float chargeStartTime;
     private bool isCharging = false;
 
     void Start()
     {
+        // Joy-Con初期化
         joycons = JoyconManager.Instance.j;
-
-        if (joycons == null || joycons.Count == 0)
-        {
-            Debug.LogWarning("⚠ Joy-Conが見つかりません。");
-            return;
-        }
-
-        if (joyconIndex < joycons.Count)
+        if (joycons.Count > joyconIndex)
         {
             j = joycons[joyconIndex];
-            Debug.Log($"🎮 Joy-Con #{joyconIndex} 接続。isLeft={j.isLeft}");
         }
         else
         {
-            Debug.LogWarning($"⚠ Joy-Con #{joyconIndex} が存在しません (接続数: {joycons.Count})");
+            Debug.LogWarning($"Joy-Con #{joyconIndex} が見つかりません。");
         }
     }
 
     void Update()
     {
-        if (pointerUI == null || mainCamera == null || joycons == null) return;
+        if (pointerUI == null || mainCamera == null || j == null) return;
 
-        // 🔄 照準（UI位置から方向ベクトル算出）
+        // --- 🎯 UI照準位置に向ける ---
         Vector2 screenPos = pointerUI.position;
         Ray ray = mainCamera.ScreenPointToRay(screenPos);
         transform.rotation = Quaternion.LookRotation(ray.direction);
 
-        // 🎮 各Joy-Conのボタンを監視（全員分チェック）
-        foreach (Joycon joy in joycons)
+        // --- ⚡ L/Rボタンでチャージ ---
+        if (j.GetButtonDown(Joycon.Button.SHOULDER_1)) // L/Rボタン押下
         {
-            if (joy == null) continue;
+            isCharging = true;
+            chargeStartTime = Time.time;
+        }
 
-            bool fireDown = joy.GetButtonDown(Joycon.Button.SHOULDER_1) || joy.GetButtonDown(Joycon.Button.SHOULDER_2);
-            bool fireUp   = joy.GetButtonUp(Joycon.Button.SHOULDER_1)   || joy.GetButtonUp(Joycon.Button.SHOULDER_2);
+        if (j.GetButtonUp(Joycon.Button.SHOULDER_1) && isCharging)
+        {
+            isCharging = false;
 
-            // 🔋 チャージ開始
-            if (fireDown && !isCharging)
-            {
-                isCharging = true;
-                chargeStartTime = Time.time;
-                Debug.Log($"⚡ チャージ開始 by {(joy.isLeft ? "左" : "右")}Joy-Con");
-            }
+            float chargeDuration = Mathf.Clamp(Time.time - chargeStartTime, 0, chargeTimeMax);
+            float chargeRatio = chargeDuration / chargeTimeMax;
+            float currentPower = Mathf.Lerp(minPower, maxPower, chargeRatio);
 
-            // 💣 発射
-            if (fireUp && isCharging)
-            {
-                isCharging = false;
-                float chargeDuration = Mathf.Clamp(Time.time - chargeStartTime, 0, chargeTimeMax);
-                float chargeRatio = chargeDuration / chargeTimeMax;
-                float currentPower = Mathf.Lerp(minPower, maxPower, chargeRatio);
+            // --- 💣 弾を発射 ---
+            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            bullet.transform.forward = ray.direction;
+            bullet.GetComponent<Rigidbody>().AddForce(ray.direction * currentPower);
 
-                GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-                bullet.transform.forward = ray.direction;
-                bullet.GetComponent<Rigidbody>().AddForce(ray.direction * currentPower);
-
-                Debug.Log($"🎯 {(joy.isLeft ? "左" : "右")}Joy-Con 発射！威力={currentPower:F0}");
-            }
+            Debug.Log($"🎯 Joy-Con#{joyconIndex} 発射！（L/Rボタン）チャージ: {chargeDuration:F2}s / 威力: {currentPower:F0}");
         }
     }
 }

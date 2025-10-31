@@ -2,29 +2,54 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    [SerializeField] GameObject[] players; // プレイヤーを順番に登録（最大4人）
+    [System.Serializable]
+    public class PlayerSet
+    {
+        public GameObject playerObject;     // 🎮 プレイヤー本体
+        public GameObject pointerUI;        // 🎯 照準UI
+        public GameObject cameraObject;     // 🎥 専用カメラ（分割画面用など）
+        public GameObject weapon;           // 💣 ショット発射スクリプト付き武器
+        public GameObject[] extras;         // その他の連動オブジェクト（任意）
+    }
+
+    [Header("👥 プレイヤー一式をまとめて登録（最大4人分）")]
+    [SerializeField] PlayerSet[] playerSets; // 各プレイヤーの関連オブジェクトをまとめて設定
 
     void Start()
     {
-        // GameManagerが存在するかチェック
         if (GameManager.Instance == null)
         {
-            Debug.LogError("GameManagerが存在しません！");
+            Debug.LogError("❌ GameManagerが存在しません！");
             return;
         }
 
-        // 現在のプレイヤー人数を取得
         int activePlayers = GameManager.Instance.playerCount;
+        Debug.Log($"プレイヤー数: {activePlayers}");
 
-        // 各プレイヤーのON/OFFを切り替え
-        for (int i = 0; i < players.Length; i++)
+        // 各プレイヤーセットを順番にON/OFF切り替え
+        for (int i = 0; i < playerSets.Length; i++)
         {
-            if (players[i] != null)
-            {
-                players[i].SetActive(i < activePlayers);
-            }
+            bool isActive = (i < activePlayers);
+
+            TogglePlayerSet(playerSets[i], isActive);
         }
 
-        Debug.Log($"プレイヤー数: {activePlayers} → アクティブ切り替え完了");
+        Debug.Log("✅ プレイヤー構成切り替え完了");
+    }
+
+    private void TogglePlayerSet(PlayerSet set, bool active)
+    {
+        if (set.playerObject) set.playerObject.SetActive(active);
+        if (set.pointerUI) set.pointerUI.SetActive(active);
+        if (set.cameraObject) set.cameraObject.SetActive(active);
+        if (set.weapon) set.weapon.SetActive(active);
+
+        if (set.extras != null)
+        {
+            foreach (var obj in set.extras)
+            {
+                if (obj) obj.SetActive(active);
+            }
+        }
     }
 }
