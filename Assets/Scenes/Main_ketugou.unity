@@ -917,7 +917,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 284069390}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05341b5a6fdbca54c933e2c5049eeffa, type: 3}
   m_Name: 
@@ -2417,6 +2417,7 @@ GameObject:
   - component: {fileID: 1113273691}
   - component: {fileID: 1113273690}
   - component: {fileID: 1113273694}
+  - component: {fileID: 1113273695}
   m_Layer: 0
   m_Name: 2P
   m_TagString: Untagged
@@ -2521,6 +2522,24 @@ MonoBehaviour:
   maxPower: 3000
   chargeTimeMax: 2
   joyconIndex: 1
+--- !u!114 &1113273695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113273689}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50b96937c4efd044096b82d2557c43fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 5595461829454215256, guid: c038568a6ab4ebb4fb27670dd3331045, type: 3}
+  pointerUI: {fileID: 1365141118}
+  mainCamera: {fileID: 611624826}
+  minPower: 1000
+  maxPower: 3000
+  chargeTimeMax: 2
 --- !u!1 &1129107083
 GameObject:
   m_ObjectHideFlags: 0
@@ -4373,6 +4392,7 @@ GameObject:
   - component: {fileID: 1921902759}
   - component: {fileID: 1921902758}
   - component: {fileID: 1921902757}
+  - component: {fileID: 1921902762}
   m_Layer: 0
   m_Name: 1P
   m_TagString: Untagged
@@ -4477,6 +4497,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1921902762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921902756}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1b472e2ea229440a1919f01277b839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 5841386859043367122, guid: b0a493feb4b932e479f1395e53eafc3a, type: 3}
+  pointerUI: {fileID: 428065350}
+  mainCamera: {fileID: 611624826}
+  minPower: 1000
+  maxPower: 3000
+  chargeTimeMax: 2
 --- !u!1 &1963958876
 GameObject:
   m_ObjectHideFlags: 0
@@ -4809,7 +4847,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1972532884}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05341b5a6fdbca54c933e2c5049eeffa, type: 3}
   m_Name: 

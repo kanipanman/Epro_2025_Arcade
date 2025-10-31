@@ -289,7 +289,7 @@ public class Joycon
     private int ReceiveRaw()
     {
         if (handle == IntPtr.Zero) return -2;
-        HIDapi.hid_set_nonblocking(handle, 1);
+        HIDapi.hid_set_nonblocking(handle, 0);
         byte[] raw_buf = new byte[report_len];
         int ret = HIDapi.hid_read(handle, raw_buf, new UIntPtr(report_len));
         if (ret > 0)
