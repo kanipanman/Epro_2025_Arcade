@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44604313, g: 0.49580294, b: 0.57447857, a: 1}
+  m_IndirectSpecularColor: {r: 0.44604284, g: 0.49580264, b: 0.57447773, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -612,6 +612,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &183535977 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9201488546185157703, guid: 11ea0f5bd5565c4438a908567b050dbc, type: 3}
+  m_PrefabInstance: {fileID: 2137995855}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &183535984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183535977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048a3dcc6a031f64ba4af64f92d4a1da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  move: 0
+  counterCount: 0
+  scoreValue: 20
+  breakEffect: {fileID: 0}
 --- !u!1 &297940732
 GameObject:
   m_ObjectHideFlags: 0
@@ -1022,6 +1043,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score1P: 0
+--- !u!1 &631411677 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9201488546185157703, guid: 11ea0f5bd5565c4438a908567b050dbc, type: 3}
+  m_PrefabInstance: {fileID: 1693818059}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &631411684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631411677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048a3dcc6a031f64ba4af64f92d4a1da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  move: 0
+  counterCount: 0
+  scoreValue: 20
+  breakEffect: {fileID: 0}
 --- !u!1 &850265875
 GameObject:
   m_ObjectHideFlags: 0
@@ -1351,6 +1393,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 969865915}
   m_CullTransparentMesh: 1
+--- !u!1 &1056825334 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9201488546185157703, guid: 11ea0f5bd5565c4438a908567b050dbc, type: 3}
+  m_PrefabInstance: {fileID: 1442923728}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1056825341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056825334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048a3dcc6a031f64ba4af64f92d4a1da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  move: 0
+  counterCount: 0
+  scoreValue: 20
+  breakEffect: {fileID: 0}
 --- !u!1 &1081362440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1424,6 +1487,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1081362440}
   m_CullTransparentMesh: 1
+--- !u!1 &1101520129 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9201488546185157703, guid: 11ea0f5bd5565c4438a908567b050dbc, type: 3}
+  m_PrefabInstance: {fileID: 9201488547024447085}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1101520136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101520129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048a3dcc6a031f64ba4af64f92d4a1da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  move: 0
+  counterCount: 0
+  scoreValue: 20
+  breakEffect: {fileID: 0}
 --- !u!1 &1129107083
 GameObject:
   m_ObjectHideFlags: 0
@@ -1722,7 +1806,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 5841386859043367122, guid: b0a493feb4b932e479f1395e53eafc3a, type: 3}
-  jc_ind: 0
 --- !u!4 &1298697033
 Transform:
   m_ObjectHideFlags: 0
@@ -1898,6 +1981,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1342998207 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9201488546185157703, guid: 11ea0f5bd5565c4438a908567b050dbc, type: 3}
+  m_PrefabInstance: {fileID: 91588180}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1342998214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342998207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048a3dcc6a031f64ba4af64f92d4a1da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  move: 0
+  counterCount: 0
+  scoreValue: 20
+  breakEffect: {fileID: 0}
 --- !u!1001 &1442923728
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2368,6 +2472,48 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1805757379}
   m_CullTransparentMesh: 1
+--- !u!1 &1881838754 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9201488546185157703, guid: 11ea0f5bd5565c4438a908567b050dbc, type: 3}
+  m_PrefabInstance: {fileID: 582252058}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1881838761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881838754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048a3dcc6a031f64ba4af64f92d4a1da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  move: 0
+  counterCount: 0
+  scoreValue: 20
+  breakEffect: {fileID: 0}
+--- !u!1 &2008495566 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9201488546185157703, guid: 11ea0f5bd5565c4438a908567b050dbc, type: 3}
+  m_PrefabInstance: {fileID: 55505379}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2008495573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008495566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048a3dcc6a031f64ba4af64f92d4a1da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  move: 0
+  counterCount: 0
+  scoreValue: 20
+  breakEffect: {fileID: 0}
 --- !u!1 &2022266608
 GameObject:
   m_ObjectHideFlags: 0
