@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   breakCount: 10
-  breakEffect: {fileID: 8406402823834156216, guid: 66fe4e9c8ee50634fb732ac8a9f00b26, type: 3}
+  breakEffect: {fileID: 5561930272169678113, guid: f74695223799eff438b813ac28552168, type: 3}
   targetPosition: {x: 0, y: 3, z: -47}
   speed: 2
   scoreValue: 200
