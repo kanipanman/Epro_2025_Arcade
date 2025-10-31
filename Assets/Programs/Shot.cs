@@ -3,16 +3,15 @@ using System.Collections.Generic;
 
 public class Shot : MonoBehaviour
 {
-    [Header("🔫 発射設定")]
     [SerializeField] GameObject bulletPrefab;
-    [SerializeField] RectTransform pointerUI;   // 🎯 照準UI（RawImage）
-    [SerializeField] Camera mainCamera;         // 🎥 メインカメラ
+    [SerializeField] RectTransform pointerUI;
+    [SerializeField] Camera mainCamera;
     [SerializeField] float minPower = 1000f;
     [SerializeField] float maxPower = 3000f;
     [SerializeField] float chargeTimeMax = 2f;
 
     [Header("🎮 Joy-Con設定")]
-    [SerializeField] int joyconIndex = 0; // 🎮 どのJoy-Conで撃つか（0～3）
+    [SerializeField] int joyconIndex = 0; // Joy-Con番号（0〜3）
 
     private List<Joycon> joycons;
     private Joycon j;
@@ -22,15 +21,15 @@ public class Shot : MonoBehaviour
 
     void Start()
     {
-        // Joy-Con初期化
         joycons = JoyconManager.Instance.j;
         if (joycons.Count > joyconIndex)
         {
             j = joycons[joyconIndex];
+            Debug.Log($"🎮 Joy-Con #{joyconIndex} 接続。isLeft={j.isLeft}");
         }
         else
         {
-            Debug.LogWarning($"Joy-Con #{joyconIndex} が見つかりません。");
+            Debug.LogWarning($"⚠ Joy-Con #{joyconIndex} が見つかりません。");
         }
     }
 
@@ -38,19 +37,36 @@ public class Shot : MonoBehaviour
     {
         if (pointerUI == null || mainCamera == null || j == null) return;
 
-        // --- 🎯 UI照準位置に向ける ---
+        // --- 🎯 照準位置をRay化して砲口を向ける ---
         Vector2 screenPos = pointerUI.position;
         Ray ray = mainCamera.ScreenPointToRay(screenPos);
         transform.rotation = Quaternion.LookRotation(ray.direction);
 
-        // --- ⚡ トリガー（ZRまたはZL）でチャージ ---
-        if (j.GetButtonDown(Joycon.Button.SHOULDER_2))  // 押した瞬間
+        // --- 🎮 Joy-Conボタンによる発射処理 ---
+        bool fireButtonDown = false;
+        bool fireButtonUp = false;
+
+        // 左右Joy-Conどちらでもボタン入力を拾う
+        if (j.isLeft)
+        {
+            fireButtonDown = j.GetButtonDown(Joycon.Button.SHOULDER_1) || j.GetButtonDown(Joycon.Button.SHOULDER_2);
+            fireButtonUp   = j.GetButtonUp(Joycon.Button.SHOULDER_1)   || j.GetButtonUp(Joycon.Button.SHOULDER_2);
+        }
+        else
+        {
+            fireButtonDown = j.GetButtonDown(Joycon.Button.SHOULDER_1) || j.GetButtonDown(Joycon.Button.SHOULDER_2);
+            fireButtonUp   = j.GetButtonUp(Joycon.Button.SHOULDER_1)   || j.GetButtonUp(Joycon.Button.SHOULDER_2);
+        }
+
+        // --- ⚡ チャージ開始 ---
+        if (fireButtonDown)
         {
             isCharging = true;
             chargeStartTime = Time.time;
         }
 
-        if (j.GetButtonUp(Joycon.Button.SHOULDER_2) && isCharging)  // 離した瞬間
+        // --- 💣 チャージ完了＆発射 ---
+        if (fireButtonUp && isCharging)
         {
             isCharging = false;
 
@@ -58,12 +74,11 @@ public class Shot : MonoBehaviour
             float chargeRatio = chargeDuration / chargeTimeMax;
             float currentPower = Mathf.Lerp(minPower, maxPower, chargeRatio);
 
-            // --- 💣 弾を発射 ---
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             bullet.transform.forward = ray.direction;
             bullet.GetComponent<Rigidbody>().AddForce(ray.direction * currentPower);
 
-            Debug.Log($"🎯 Joy-Con#{joyconIndex} 発射！ チャージ: {chargeDuration:F2}s / 威力: {currentPower:F0}");
+            Debug.Log($"🎯 Joy-Con#{joyconIndex}（{(j.isLeft ? "左" : "右")}） 発射！威力={currentPower:F0}");
         }
     }
 }
