@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 8394392928242508276}
   - component: {fileID: 8394392928242508279}
   - component: {fileID: 8394392928242508278}
-  - component: {fileID: 8394392928242508273}
   - component: {fileID: 3058947039752266050}
+  - component: {fileID: 8477626682660388188}
   m_Layer: 0
   m_Name: BonusTarget
   m_TagString: Untagged
@@ -99,23 +99,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.9, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8394392928242508273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8394392928242508272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d79c354b9bb8b8d47a54ffbe33e8ed03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  breakCount: 10
-  breakEffect: {fileID: 8406402823834156216, guid: 66fe4e9c8ee50634fb732ac8a9f00b26, type: 3}
-  targetPosition: {x: 0, y: 3, z: -47}
-  speed: 2
-  scoreValue: 200
 --- !u!82 &3058947039752266050
 AudioSource:
   m_ObjectHideFlags: 0
@@ -212,3 +195,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8477626682660388188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8394392928242508272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9e50552d2187834d88af73d20c5e6ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  breakCount: 10
+  breakEffect: {fileID: 8406402823834156216, guid: 66fe4e9c8ee50634fb732ac8a9f00b26, type: 3}
+  targetPosition: {x: 0, y: 3, z: -47}
+  speed: 2
+  scoreValue: 100

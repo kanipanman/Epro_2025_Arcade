@@ -1,38 +1,56 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Shot : MonoBehaviour
 {
+    [Header("🔫 発射設定")]
     [SerializeField] GameObject bulletPrefab;
-    [SerializeField] RectTransform pointerUI;   // 🎯 RawImage（照準UI）をここに設定
+    [SerializeField] RectTransform pointerUI;   // 🎯 照準UI（RawImage）
     [SerializeField] Camera mainCamera;         // 🎥 メインカメラ
     [SerializeField] float minPower = 1000f;
     [SerializeField] float maxPower = 3000f;
     [SerializeField] float chargeTimeMax = 2f;
 
+    [Header("🎮 Joy-Con設定")]
+    [SerializeField] int joyconIndex = 0; // 🎮 どのJoy-Conで撃つか（0～3）
+
+    private List<Joycon> joycons;
+    private Joycon j;
+
     private float chargeStartTime;
     private bool isCharging = false;
 
+    void Start()
+    {
+        // Joy-Con初期化
+        joycons = JoyconManager.Instance.j;
+        if (joycons.Count > joyconIndex)
+        {
+            j = joycons[joyconIndex];
+        }
+        else
+        {
+            Debug.LogWarning($"Joy-Con #{joyconIndex} が見つかりません。");
+        }
+    }
+
     void Update()
     {
-        if (pointerUI == null || mainCamera == null) return;
+        if (pointerUI == null || mainCamera == null || j == null) return;
 
-        // --- 🎯 UI照準のスクリーン座標を取得 ---
+        // --- 🎯 UI照準位置に向ける ---
         Vector2 screenPos = pointerUI.position;
-
-        // --- 🎥 カメラからその方向にレイを飛ばす ---
         Ray ray = mainCamera.ScreenPointToRay(screenPos);
-
-        // --- 🔄 Rayの方向を向くように砲口を回転 ---
         transform.rotation = Quaternion.LookRotation(ray.direction);
 
-        // --- ⚡ チャージ処理 ---
-        if (Input.GetMouseButtonDown(0))
+        // --- ⚡ トリガー（ZRまたはZL）でチャージ ---
+        if (j.GetButtonDown(Joycon.Button.SHOULDER_2))  // 押した瞬間
         {
             isCharging = true;
             chargeStartTime = Time.time;
         }
 
-        if (Input.GetMouseButtonUp(0) && isCharging)
+        if (j.GetButtonUp(Joycon.Button.SHOULDER_2) && isCharging)  // 離した瞬間
         {
             isCharging = false;
 
@@ -40,12 +58,12 @@ public class Shot : MonoBehaviour
             float chargeRatio = chargeDuration / chargeTimeMax;
             float currentPower = Mathf.Lerp(minPower, maxPower, chargeRatio);
 
-            // --- 💣 弾生成＆発射 ---
+            // --- 💣 弾を発射 ---
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             bullet.transform.forward = ray.direction;
             bullet.GetComponent<Rigidbody>().AddForce(ray.direction * currentPower);
 
-            Debug.Log($"発射！UI位置: {screenPos} / 威力: {currentPower:F0}");
+            Debug.Log($"🎯 Joy-Con#{joyconIndex} 発射！ チャージ: {chargeDuration:F2}s / 威力: {currentPower:F0}");
         }
     }
 }
