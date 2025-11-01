@@ -50,12 +50,22 @@ public class Target_L3 : MonoBehaviour
                 Destroy(gameObject);
                 Destroy(collision.gameObject);
                 GenerateEffect();
-                //全体に加点
-                scoreText1P.GetComponent<scoreManager1P>().score1P = scoreText1P.GetComponent<scoreManager1P>().score1P + scoreValue;
-                scoreText2P.GetComponent<scoreManager2P>().score2P = scoreText2P.GetComponent<scoreManager2P>().score2P + scoreValue;
-                scoreText3P.GetComponent<scoreManager3P>().score3P = scoreText3P.GetComponent<scoreManager3P>().score3P + scoreValue;
-                scoreText4P.GetComponent<scoreManager4P>().score4P = scoreText4P.GetComponent<scoreManager4P>().score4P + scoreValue;
-                
+                if (collision.gameObject.CompareTag("Bullet_1P"))
+                {
+                    scoreText1P.GetComponent<scoreManager1P>().score1P = scoreText1P.GetComponent<scoreManager1P>().score1P + scoreValue;
+                }
+                else if (collision.gameObject.CompareTag("Bullet_2P"))
+                {
+                    scoreText2P.GetComponent<scoreManager2P>().score2P = scoreText2P.GetComponent<scoreManager2P>().score2P + scoreValue;
+                }
+                else if (collision.gameObject.CompareTag("Bullet_3P"))
+                {
+                    scoreText3P.GetComponent<scoreManager3P>().score3P = scoreText3P.GetComponent<scoreManager3P>().score3P + scoreValue;
+                }
+                else if (collision.gameObject.CompareTag("Bullet_4P"))
+                {
+                    scoreText4P.GetComponent<scoreManager4P>().score4P = scoreText4P.GetComponent<scoreManager4P>().score4P + scoreValue;
+                }
             }
         }
     }
