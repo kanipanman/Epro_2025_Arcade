@@ -39,9 +39,12 @@ public class JoyConCube : MonoBehaviour
 
 			gyro = j.GetGyro();
 			accel = j.GetAccel();
-
 			orientation = j.GetVector();
-			gameObject.transform.rotation = orientation;
+
+			// Joy-Con → Unity 座標系変換（前後逆に使ってる前提）
+			Quaternion correction = Quaternion.Euler(0, 0, 0); // Y軸方向に180度回転
+			gameObject.transform.rotation = correction * orientation;
+
 		}
 	}
 }
